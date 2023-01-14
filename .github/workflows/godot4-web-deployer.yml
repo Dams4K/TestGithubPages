@@ -18,32 +18,33 @@ env:
 
   DEPLOYMENT_BRANCH: gh-pages
 
-  # If you have a custom godot you may want to download your own godot
-  GODOT_VERSION: ${GODOT_MAJOR_MINOR_VERSION}.${GODOT_PATCH_VERSION}
-  
-  #GODOT_EXECUTABLE_DOWNLOAD_URL: 
-  #GODOT_TEMPLATES_DOWNLOAD_URL: 
-
 jobs:
   export_web:
     runs-on: ubuntu-latest
     name: Export Web Game
     steps:
+    - name: "Set environmental variables"
+      # If you have a custom godot you may want to modify the urls to download your own godot
+      run: |
+        echo "GODOT_VERSION=${GODOT_MAJOR_MINOR_VERSION}.${GODOT_PATCH_VERSION}" >> $GITHUB_ENV
+
+        echo "GODOT_EXECUTABLE_DOWNLOAD_URL=https://downloads.tuxfamily.org/godotengine/${GODOT_MAJOR_MINOR_VERSION}/${GODOT_PATCH_VERSION}/Godot_v${GODOT_MAJOR_MINOR_VERSION}-${GODOT_PATCH_VERSION}_linux.x86_64.zip" >> $GITHUB_ENV
+        echo "GODOT_TEMPLATES_DOWNLOAD_URL=https://downloads.tuxfamily.org/godotengine/${GODOT_MAJOR_MINOR_VERSION}/${GODOT_PATCH_VERSION}/Godot_v${GODOT_MAJOR_MINOR_VERSION}-${GODOT_PATCH_VERSION}_export_templates.tpz" >> $GITHUB_ENV
+
     - name: Checkout
       uses: actions/checkout@v3
     
     - name: Install Godot
       run: |
-        pwd
         # Download godot executable and templates
-        curl https://downloads.tuxfamily.org/godotengine/${GODOT_MAJOR_MINOR_VERSION}/${GODOT_PATCH_VERSION}/Godot_v${GODOT_MAJOR_MINOR_VERSION}-${GODOT_PATCH_VERSION}_linux.x86_64.zip --output godot.zip
-        curl https://downloads.tuxfamily.org/godotengine/${GODOT_MAJOR_MINOR_VERSION}/${GODOT_PATCH_VERSION}/Godot_v${GODOT_MAJOR_MINOR_VERSION}-${GODOT_PATCH_VERSION}_export_templates.tpz --output templates.tpz
+        curl GODOT_EXECUTABLE_DOWNLOAD_URL --output godot.zip
+        curl GODOT_TEMPLATES_DOWNLOAD_URL --output templates.tpz
 
         unzip godot.zip -d godot
         unzip templates.tpz
 
         # Create needed dirs
-        # Templates with godot 4 must be in ~/.local/share/godot/export_templates/{MAJOR.MINOR.PATCH}
+        # Templates with godot 4 must be in ~/.local/share/godot/export_templates/${MAJOR.MINOR.PATCH}
         mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}
         
         mv templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}
