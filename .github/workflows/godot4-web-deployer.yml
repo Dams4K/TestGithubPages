@@ -1,3 +1,9 @@
+# Make sure you have an export preset for web and you must
+# have put `<script src="coi-serviceworker.js"></script>`
+# in the "Head Include" property of the preset the
+# "coi-serviceworker.js" script allow setting COOP and COEP
+# headers in Github Pages, without, the game will not load
+
 name: "godot4-web-deployer"
 on: push
 
@@ -7,16 +13,16 @@ permissions:
 env:
   # Basic Settings
   GODOT_MAJOR_MINOR_VERSION: "4.0" # must be a string, not a number
-  GODOT_PATCH_VERSION: beta10
+  GODOT_PATCH_VERSION: beta12
 
-  PROJECT_FOLDER: "project/"
+  PROJECT_FOLDER: "/project" # the path to the godot project (must contain `project.godot` file) relative to the github root path
 
-  EXPORT_TEMPLATE: debug # release || debug
-  EXPORT_PRESET_NAME: Web
-  EXPORT_FOLDER: build/
-  EXPORT_FILENAME: index.html
+  EXPORT_TEMPLATE: release # export with release || debug
+  EXPORT_PRESET_NAME: Web # name of the preset
+  EXPORT_FOLDER: build/ # just the folder where the project will be build, not really important
+  EXPORT_FILENAME: index.html # export file name
 
-  DEPLOYMENT_BRANCH: gh-pages-v2
+  DEPLOYMENT_BRANCH: web-launcher # the name of the branch, will be automatically created if it does not exist
 
 jobs:
   export_web:
