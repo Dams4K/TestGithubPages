@@ -1,0 +1,47 @@
+name: "godot-exporter"
+on: push
+
+env:
+  GODOT_VERSION: 4.0.beta11
+  GODOT_EXECUTABLE_DOWNLOAD_URL: https://downloads.tuxfamily.org/godotengine/4.0/beta11/Godot_v4.0-beta11_linux.x86_64.zip
+  GODOT_TEMPLATES_DOWNLOAD_URL: https://downloads.tuxfamily.org/godotengine/4.0/beta11/Godot_v4.0-beta11_export_templates.tpz
+  EXPORT_NAME: TestProject
+
+jobs:
+  export_web:
+    runs-on: ubuntu-latest
+    name: Export Web Game
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        lfs: true
+    - name: Install Godot
+      run: |
+        curl ${GODOT_EXECUTABLE_DOWNLOAD_URL} --output godot.zip
+        curl ${GODOT_TEMPLATES_DOWNLOAD_URL} --output templates.tpz
+        unzip godot.zip -d godot
+        unzip templates.tpz
+
+        mkdir -v -p ~/.local/share/godot/${GODOT_VERSION}
+        
+        mv templates/* ~/.local/share/godot/${GODOT_VERSION}
+        mv godot/Godot* godot.x86_64
+
+        rm -R templates/
+        rm templates.tpz
+    - name: Build Project
+      run: |
+        mkdir -v -p build/web
+        cd project/
+        ../godot.x86_64 --headless --path . --export "Web" ../build/web/index.html
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: web
+        path: build/web
+    - name: Deploy to GitHub Pages 🚀
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        branch: gh-pages
+        folder: build/web
