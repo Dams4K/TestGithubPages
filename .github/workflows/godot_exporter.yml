@@ -34,7 +34,7 @@ jobs:
       run: |
         mkdir -v -p build/web
         cd project/
-        ../godot.x86_64 --headless --path . --export "Web" ../build/web/index.html
+        ../godot.x86_64 --headless --path . --export-release "Web" ../build/web/index.html
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
