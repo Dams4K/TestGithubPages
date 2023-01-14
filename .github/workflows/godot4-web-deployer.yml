@@ -24,7 +24,7 @@ jobs:
     name: Export Web Game
     steps:
     - name: "Set environmental variables"
-      # If you have a custom godot you may want to modify the urls to download your own godot
+      # If you have a custom godot you may want to modify the urls to download your own godot and templates
       run: |
         echo "GODOT_VERSION=${GODOT_MAJOR_MINOR_VERSION}.${GODOT_PATCH_VERSION}" >> $GITHUB_ENV
 
@@ -70,11 +70,11 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: ${EXPORT_PRESET_NAME}
-        path: ${EXPORT_FOLDER}
+        name: ${{ EXPORT_PRESET_NAME }}
+        path: ${{ EXPORT_FOLDER }}
     
     - name: Deploy to GitHub Pages 🚀
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        branch: ${DEPLOYMENT_BRANCH}
-        folder: ${EXPORT_FOLDER}
+        branch: ${{ DEPLOYMENT_BRANCH }}
+        folder: ${{ EXPORT_FOLDER }}
