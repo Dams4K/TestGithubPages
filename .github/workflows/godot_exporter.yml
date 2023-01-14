@@ -1,6 +1,7 @@
 name: "godot-exporter"
 on: push
-
+permissions:
+  contents: write
 env:
   GODOT_VERSION: 4.0.beta11
   GODOT_EXECUTABLE_DOWNLOAD_URL: https://downloads.tuxfamily.org/godotengine/4.0/beta11/Godot_v4.0-beta11_linux.x86_64.zip
