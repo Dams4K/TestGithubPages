@@ -39,6 +39,7 @@ jobs:
     - name: Add coi-service-worker
       run: |
         cd ../
+        tree
         git clone https://github.com/gzuidhof/coi-serviceworker.git
         mv coi-serviceworker/coi-serviceworker.js build/web/coi-serviceworker.js
     - name: Upload Artifact
