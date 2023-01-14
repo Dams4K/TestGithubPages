@@ -7,16 +7,16 @@ permissions:
 env:
   # Basic Settings
   GODOT_MAJOR_MINOR_VERSION: "4.0" # must be a string, not a number
-  GODOT_PATCH_VERSION: beta11
+  GODOT_PATCH_VERSION: beta10
 
   PROJECT_FOLDER: "project/"
 
-  EXPORT_TEMPLATE: release # release || debug
+  EXPORT_TEMPLATE: debug # release || debug
   EXPORT_PRESET_NAME: Web
   EXPORT_FOLDER: build/
   EXPORT_FILENAME: index.html
 
-  DEPLOYMENT_BRANCH: gh-pages
+  DEPLOYMENT_BRANCH: gh-pages-v2
 
 jobs:
   export_web:
@@ -60,7 +60,7 @@ jobs:
         cd ${PROJECT_FOLDER}
 
         # Exporting the game
-        ${GITHUB_WORKSPACE}/godot.x86_64 --headless --path . --export-${EXPORT_TEMPLATE} ${EXPORT_PRESET_NAME} ${GITHUB_WORKSPACE}/${EXPORT_FOLDER}/{$EXPORT_FILENAME}
+        ${GITHUB_WORKSPACE}/godot.x86_64 --headless --path . --export-${EXPORT_TEMPLATE} ${EXPORT_PRESET_NAME} ${GITHUB_WORKSPACE}/${EXPORT_FOLDER}/${EXPORT_FILENAME}
     
     - name: Add coi-service-worker
       run: |
