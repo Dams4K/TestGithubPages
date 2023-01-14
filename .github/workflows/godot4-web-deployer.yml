@@ -15,14 +15,14 @@ env:
   GODOT_MAJOR_MINOR_VERSION: "4.0" # must be a string, not a number
   GODOT_PATCH_VERSION: beta12
 
-  PROJECT_FOLDER: "project" # the path to the godot project (must contain `project.godot` file) relative to the github root path (don't put a "/" at the beginning)
+  PROJECT_FOLDER: "." # the path to the godot project (must contain `project.godot` file) relative to the github root path (don't put a "/" at the beginning)
 
   EXPORT_TEMPLATE: release # export with release || debug
   EXPORT_PRESET_NAME: Web # name of the preset
   EXPORT_FOLDER: build/ # just the folder where the project will be build, not really important
   EXPORT_FILENAME: index.html # export file name
 
-  DEPLOYMENT_BRANCH: web-launcher # the name of the branch, will be automatically created if it does not exist
+  DEPLOYMENT_BRANCH: gh-pages # the name of the branch, will be automatically created if it does not exist
 
 jobs:
   export_web:
