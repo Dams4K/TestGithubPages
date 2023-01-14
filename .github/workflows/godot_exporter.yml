@@ -23,9 +23,9 @@ jobs:
         unzip godot.zip -d godot
         unzip templates.tpz
 
-        mkdir -v -p ~/.local/share/godot/${GODOT_VERSION}
+        mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}
         
-        mv templates/* ~/.local/share/godot/${GODOT_VERSION}
+        mv templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}
         mv godot/Godot* godot.x86_64
 
         rm -R templates/
