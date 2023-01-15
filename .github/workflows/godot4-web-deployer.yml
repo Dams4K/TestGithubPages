@@ -17,7 +17,7 @@ env:
 
   PROJECT_FOLDER: "." # the path to the godot project (must contain `project.godot` file) relative to the github root path (don't put a "/" at the beginning)
 
-  EXPORT_TEMPLATE: release # export with release || debug
+  EXPORT_TEMPLATE: debug # export with release || debug
   EXPORT_PRESET_NAME: Web # name of the preset
   EXPORT_FOLDER: build/ # just the folder where the project will be build, not really important
   EXPORT_FILENAME: index.html # export file name
